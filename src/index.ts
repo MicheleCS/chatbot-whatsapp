@@ -2,6 +2,7 @@ import { ChatCompletionRequestMessage } from "openai"
 import { Message, Whatsapp, create } from "venom-bot"
 import { config } from "./config"
 import { openai } from "./lib/openai"
+import { initPrompt } from "./utils/initPrompt"
 
 async function completion(
   messages: ChatCompletionRequestMessage[]
@@ -16,11 +17,13 @@ async function completion(
   return completion.data.choices[0].message?.content
 }
 
+const storeName = 'VMD Credito'
+const orderCode = "1232"
+
 const customerChat: ChatCompletionRequestMessage[] = [
   {
     role: "system",
-    content:
-      "Você é uma assistente virtual de atedimento de emprestimo consignado da empresa VMD Credito. Você deve ser educada, atenciosa e sempre informar o cliente sobre o andamento do processo de cadastro."
+    content:initPrompt(storeName, orderCode)
   },
 ]
 
