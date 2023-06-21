@@ -21,7 +21,7 @@
   "homepage": "https://github.com/MicheleCS/chatbot-whatsapp#readme",
   "devDependencies": {
     "@types/node": "^20.3.1",
-    "nodemon": "^2.0.22",
+    "nodemon": "^1.10.2",
     "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.3"
