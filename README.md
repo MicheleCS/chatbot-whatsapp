@@ -6,7 +6,7 @@
 # Instalar as dependências do projeto:
 
 npm install
-```
+
 # Executar o bot:
 
 npm run dev
@@ -15,9 +15,9 @@ npm run dev
 
  Banco de dados Redis- NoSQL. Se não possuir o Redis instalado no seu computador, poderá utilizar o Docker para subir um container com o Redis através do docker-compose:
 
-```
+
 docker-compose up -d
-```
+
 
 # ChatGPT
 Você irá precisar também de uma conta e API Key no [OpenAI](https://platform.openai.com/account/api-keys).
