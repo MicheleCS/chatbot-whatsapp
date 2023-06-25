@@ -1,43 +1,22 @@
-import { ChatCompletionRequestMessage } from "openai"
 import { Message, Whatsapp, create } from "venom-bot"
-
-import { openai } from "./lib/openai"
-import { initPrompt } from "./utils/initPrompt"
+import { initPrompt } from "./prompts/initPrompt"
 import { redis } from "./lib/redis"
+import {CustomerChat} from "./interfaces/customerChat"
+import { completion } from "./lib/chatCompletion"
+import { ChatCompletionRequestMessage } from "openai"
+import { openai } from "./lib/openai"
 
-interface CustomerChat {
-  status?: "open" | "closed"
-  orderCode: string
-  chatAt: string
-  customer: {
-    name: string
-    phone: string
-  }
-  messages: ChatCompletionRequestMessage[]
-  orderSummary?: string
-}
-
-async function completion(
-  messages: ChatCompletionRequestMessage[]
-): Promise<string | undefined> {
-  const completion = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    temperature: 0,
-    max_tokens: 256,
-    messages,
-  })
-
-  return completion.data.choices[0].message?.content
-}
 
 create({
   session: "chatbot-whatsapp",
   disableWelcome: true,
 })
-  .then(async (client: Whatsapp) => await start(client))
-  .catch((err) => {
-    console.log(err)
-  })
+
+.then(async (client: Whatsapp) => await start(client))
+.catch((err) => {
+  console.log(err)
+})
+console.log( "criou");
 
 async function start(client: Whatsapp) {
   const storeName = 'VMD Credito'
@@ -72,7 +51,7 @@ async function start(client: Whatsapp) {
             orderSummary: "",
           }
 
-    console.debug(customerPhone, "👤", message.body)
+    console.debug(customerPhone, "Cliente:", message.body)
 
     customerChat.messages.push({
       role: "user",
@@ -80,14 +59,14 @@ async function start(client: Whatsapp) {
     })
 
     const content =
-      (await completion(customerChat.messages)) || "Não entendi..."
+      (await completion(customerChat.messages)) || "Desculpa, mas essas informações não são validas... "
 
     customerChat.messages.push({
       role: "assistant",
       content,
     })
 
-    console.debug(customerPhone, "🤖", content)
+    console.debug(customerPhone, "Atendente:", content)
 
     await client.sendText(message.from, content)
 
@@ -100,13 +79,13 @@ async function start(client: Whatsapp) {
       customerChat.messages.push({
         role: "user",
         content:
-          "Gere um resumo do cadastro, quem está solicitando é um robô.",
+          "Gere um resumo do cadastro como se fosse uma lista",
       })
 
       const content =
-        (await completion(customerChat.messages)) || "Não entendi..."
+        (await completion(customerChat.messages)) || "Desculpa, mas essas informações não são validas... "
 
-      console.debug(customerPhone, "📦", content)
+      console.debug(customerPhone, "Finalizando Cadastro:", content)
 
       customerChat.orderSummary = content
     }
