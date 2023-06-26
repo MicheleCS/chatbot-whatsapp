@@ -6,20 +6,21 @@
 # Instalar as dependências do projeto:
 
 npm install
-
-# Executar o bot:
+-Executar o bot:
 
 npm run dev
 
-# Banco de dados:
-
+- Banco de dados:
  Banco de dados Redis- NoSQL. Se não possuir o Redis instalado no seu computador, poderá utilizar o Docker para subir um container com o Redis através do docker-compose:
 
 
 docker-compose up -d
 
 
-# ChatGPT
+- ChatGPT
 Você irá precisar também de uma conta e API Key no [OpenAI](https://platform.openai.com/account/api-keys).
 
 Criar um arquivo `.env` na raiz do projeto, de acordo com o .env.exemplo
+
+
+OBS: Após rodar a aplicação no terminal vai aparecer um QR code, conecte seu whatsapp nesse QR Code. Outra pessoas deve te mandar msg, assim o Chatbot vai responder.
